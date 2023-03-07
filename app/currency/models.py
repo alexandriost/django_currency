@@ -1,18 +1,28 @@
 from django.db import models
+from currency.choices import RateCurrencyChoices
 
 
 class Rate(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    currency = models.CharField(max_length=25)
+    currency = models.PositiveSmallIntegerField(
+        choices=RateCurrencyChoices.choices,
+        default=RateCurrencyChoices.USD
+    )
     buy = models.DecimalField(max_digits=6, decimal_places=2)
     sell = models.DecimalField(max_digits=6, decimal_places=2)
     source = models.CharField(max_length=25)
+
+    def __str__(self):
+        return f'| Id-{self.id} | Currency: {self.get_currency_display()} | Buy: {self.buy} |'
 
 
 class ContactUs(models.Model):
     email_from = models.EmailField()
     subject = models.CharField(max_length=100)
     message = models.TextField()
+
+    class Meta:
+        verbose_name_plural = 'Contact Us'
 
 
 class Source(models.Model):
