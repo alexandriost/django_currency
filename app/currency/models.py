@@ -17,8 +17,10 @@ class Rate(models.Model):
 
 
 class ContactUs(models.Model):
-    email_from = models.EmailField()
-    subject = models.CharField(max_length=100)
+    created = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=128)
+    email = models.EmailField()
+    subject = models.CharField(max_length=256)
     message = models.TextField()
 
     class Meta:
@@ -30,3 +32,9 @@ class Source(models.Model):
     source_url = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=13, blank=True)
     email = models.EmailField(blank=True)
+
+
+class RequestResponseLog(models.Model):
+    path = models.CharField(max_length=255)
+    request = models.CharField(max_length=255)
+    time = models.FloatField()

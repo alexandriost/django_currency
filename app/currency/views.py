@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from currency.models import Rate, ContactUs, Source
-from currency.forms import RateForm, ContactUsForm, SourceForm
+from currency.forms import RateForm, SourceForm
 
 
 class RateListView(ListView):
@@ -33,33 +33,40 @@ class RateDeleteView(DeleteView):
     success_url = reverse_lazy('currency:rate-list')
 
 
-class ContactUsListView(ListView):
-    queryset = ContactUs.objects.all()
-    template_name = 'contactus_list.html'
-
-
-class ContactUsDetailView(DetailView):
-    queryset = ContactUs.objects.all()
-    template_name = 'contactus_details.html'
-
-
 class ContactUsCreateView(CreateView):
-    form_class = ContactUsForm
     template_name = 'contactus_create.html'
-    success_url = reverse_lazy('currency:contactus-list')
+    success_url = reverse_lazy('index')
+    model = ContactUs
+    fields = (
+        'name',
+        'email',
+        'subject',
+        'message'
+    )
 
+    def _send_mail(self):
+        subject = 'User ContactUs'
+        recipient = 'support@example.com'
+        message = f'''
+            Request from: {self.object.name}. 
+            Reply to email: {self.object.email}. 
+            Subject: {self.object.subject}, 
+            Body: {self.object.message}
+        '''
 
-class ContactUsUpdateView(UpdateView):
-    queryset = ContactUs.objects.all()
-    form_class = ContactUsForm
-    template_name = 'contactus_update.html'
-    success_url = reverse_lazy('currency:contactus-list')
+        from django.core.mail import send_mail
+        send_mail(
+            subject,
+            message,
+            recipient,
+            [recipient],
+            fail_silently=False,
+        )
 
-
-class ContactUsDeleteView(DeleteView):
-    queryset = ContactUs.objects.all()
-    template_name = 'contactus_delete.html'
-    success_url = reverse_lazy('currency:contactus-list')
+    def form_valid(self, form):
+        redirect = super().form_valid(form)
+        self._send_mail()
+        return redirect
 
 
 class SourceListView(ListView):

@@ -20,7 +20,7 @@
     {% for contact in object_list %}
     <tr>
         <td>{{ contact.id }}</td>
-        <td>{{ contact.email_from }}</td>
+        <td>{{ contact.email }}</td>
         <td>{{ contact.subject }}</td>
         <td>{{ contact.message }}</td>
         <td><a href="{% url 'currency:contactus-details' contact.id %}">Details</a></td>

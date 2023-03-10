@@ -13,16 +13,6 @@ class RateForm(forms.ModelForm):
         )
 
 
-class ContactUsForm(forms.ModelForm):
-    class Meta:
-        model = ContactUs
-        fields = (
-            'email_from',
-            'subject',
-            'message',
-        )
-
-
 class SourceForm(forms.ModelForm):
     class Meta:
         model = Source
