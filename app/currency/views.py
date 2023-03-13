@@ -48,10 +48,10 @@ class ContactUsCreateView(CreateView):
         subject = 'User ContactUs'
         recipient = 'support@example.com'
         message = f'''
-            Request from: {self.object.name}. 
-            Reply to email: {self.object.email}. 
-            Subject: {self.object.subject}, 
-            Body: {self.object.message}
+        Request from: {self.object.name}.
+        Reply to email: {self.object.email}.
+        Subject: {self.object.subject},
+        Body: {self.object.message}
         '''
 
         from django.core.mail import send_mail

@@ -15,10 +15,12 @@ class RequestResponseTimeMiddleware:
 
         total_time = end - start
 
-        # print(f'Total time: {end - start}')
+        total_time_ms = int(total_time * 1000)
+
+        # print(f'Total time: {total_time_ms} ms')
 
         # RequestResponseLog.objects.create(path=..., method=..., time=...)
 
-        RequestResponseLog.objects.create(path=request.path, request=request.method, time=total_time)
+        RequestResponseLog.objects.create(path=request.path, request=request.method, time=total_time_ms)
 
         return response

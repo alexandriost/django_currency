@@ -37,4 +37,4 @@ class Source(models.Model):
 class RequestResponseLog(models.Model):
     path = models.CharField(max_length=255)
     request = models.CharField(max_length=255)
-    time = models.FloatField()
+    time = models.IntegerField()
