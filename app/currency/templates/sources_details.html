@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Source details
+{% endblock title %}
+
+{% block content %}
+
+    <h1>Source details</h1>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>URL</th>
+            <th>Phone number</th>
+            <th>E-mail</th>
+        </tr>
+        <tr>
+            <td>{{ source.id }}</td>
+            <td>{{ source.name }}</td>
+            <td>{{ source.source_url }}</td>
+            <td>{{ source.phone_number }}</td>
+            <td>{{ source.email }}</td>
+        </tr>
+    </table>
+
+    <a href="{% url 'currency:sources-list' %}">Back to all sources</a><br><br>
+
+{% endblock content %}

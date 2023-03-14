@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Contact Us
+{% endblock title %}
+
+{% block content %}
+
+    <h1>Contact Us list</h1>
+
+    <a href="{% url 'currency:contactus-create' %}">Create contact</a><br><p>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Subject</th>
+        <th>Message</th>
+    </tr>
+    {% for contact in object_list %}
+    <tr>
+        <td>{{ contact.id }}</td>
+        <td>{{ contact.email }}</td>
+        <td>{{ contact.subject }}</td>
+        <td>{{ contact.message }}</td>
+        <td><a href="{% url 'currency:contactus-details' contact.id %}">Details</a></td>
+        <td><a href="{% url 'currency:contactus-update' contact.id %}">Update</a></td>
+        <td><a href="{% url 'currency:contactus-delete' contact.id %}">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock content %}

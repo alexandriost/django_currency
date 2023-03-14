@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Sources
+{% endblock title %}
+
+{% block content %}
+
+    <h1>Sources list</h1>
+
+<a href="{% url 'currency:sources-create' %}">Create source</a><p>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>URL</th>
+        <th>Phone number</th>
+        <th>E-mail</th>
+    </tr>
+    {% for source in object_list %}
+    <tr>
+        <td>{{ source.id }}</td>
+        <td>{{ source.name }}</td>
+        <td>{{ source.source_url }}</td>
+        <td>{{ source.phone_number }}</td>
+        <td>{{ source.email }}</td>
+        <td>
+            <a href="{% url 'currency:sources-update' source.id %}">Update</a>
+            <a href="{% url 'currency:sources-delete' source.id %}">Delete</a>
+            <a href="{% url 'currency:sources-details' source.id %}">Details</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock content %}
