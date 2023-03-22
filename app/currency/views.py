@@ -1,7 +1,8 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from currency.models import Rate, ContactUs, Source
 from currency.forms import RateForm, SourceForm
 
@@ -11,7 +12,7 @@ class RateListView(ListView):
     template_name = 'rates_list.html'
 
 
-class RateDetailView(DetailView):
+class RateDetailView(LoginRequiredMixin, DetailView):
     queryset = Rate.objects.all()
     template_name = 'rates_details.html'
 
@@ -22,17 +23,23 @@ class RateCreateView(CreateView):
     success_url = reverse_lazy('currency:rate-list')
 
 
-class RateUpdateView(UpdateView):
+class RateUpdateView(UserPassesTestMixin, UpdateView):
     queryset = Rate.objects.all()
     form_class = RateForm
     template_name = 'rates_update.html'
     success_url = reverse_lazy('currency:rate-list')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class RateDeleteView(DeleteView):
+
+class RateDeleteView(UserPassesTestMixin, DeleteView):
     queryset = Rate.objects.all()
     template_name = 'rates_delete.html'
     success_url = reverse_lazy('currency:rate-list')
+
+    def test_func(self):
+        return self.request.user.is_superuser
 
 
 class ContactUsCreateView(CreateView):
@@ -48,7 +55,7 @@ class ContactUsCreateView(CreateView):
 
     def _send_mail(self):
         subject = 'User ContactUs'
-        recipient = 'support@example.com'
+        recipient = settings.DEFAULT_FROM_EMAIL
         message = f'''
         Request from: {self.object.name}.
         Reply to email: {self.object.email}.
@@ -98,6 +105,10 @@ class SourceDeleteView(DeleteView):
     queryset = Source.objects.all()
     template_name = 'sources_delete.html'
     success_url = reverse_lazy('currency:sources-list')
+
+
+class IndexView(TemplateView):
+    template_name = 'index.html'
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
