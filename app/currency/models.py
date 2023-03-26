@@ -37,6 +37,7 @@ class Source(models.Model):
     def __str__(self):
         return self.name
 
+
 class RequestResponseLog(models.Model):
     path = models.CharField(max_length=255)
     request = models.CharField(max_length=255)
