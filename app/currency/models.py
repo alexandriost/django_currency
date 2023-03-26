@@ -10,7 +10,8 @@ class Rate(models.Model):
     )
     buy = models.DecimalField(max_digits=6, decimal_places=2)
     sell = models.DecimalField(max_digits=6, decimal_places=2)
-    source = models.CharField(max_length=25)
+    # source = models.CharField(max_length=25)
+    source = models.ForeignKey('currency.Source', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'| Id-{self.id} | Currency: {self.get_currency_display()} | Buy: {self.buy} |'
@@ -33,6 +34,8 @@ class Source(models.Model):
     phone_number = models.CharField(max_length=13, blank=True)
     email = models.EmailField(blank=True)
 
+    def __str__(self):
+        return self.name
 
 class RequestResponseLog(models.Model):
     path = models.CharField(max_length=255)
