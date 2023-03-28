@@ -1,4 +1,5 @@
 from django.db import models
+from django.templatetags.static import static
 from currency.choices import RateCurrencyChoices
 
 
@@ -28,11 +29,28 @@ class ContactUs(models.Model):
         verbose_name_plural = 'Contact Us'
 
 
+def source_logo_path(instance, filename):
+    return f'source_logos/{instance.id}/{filename}'
+
+
 class Source(models.Model):
     name = models.CharField(max_length=64)
     source_url = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=13, blank=True)
     email = models.EmailField(blank=True)
+    source_logo = models.FileField(
+        default=None,
+        null=True,
+        blank=True,
+        upload_to=source_logo_path
+    )
+
+    @property
+    def logo_url(self):
+        if self.source_logo:
+            return self.source_logo.url
+
+        return static('logo-blank.jpeg')
 
     def __str__(self):
         return self.name
