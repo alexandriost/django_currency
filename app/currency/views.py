@@ -1,10 +1,10 @@
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
-from currency.models import Rate, ContactUs, Source
+
 from currency.forms import RateForm, SourceForm
+from currency.models import Rate, ContactUs, Source
 
 
 class RateListView(ListView):
@@ -109,20 +109,6 @@ class SourceDeleteView(DeleteView):
 
 class IndexView(TemplateView):
     template_name = 'index.html'
-
-
-class ProfileView(LoginRequiredMixin, UpdateView):
-    template_name = 'registration/profile.html'
-    success_url = reverse_lazy('index')
-    # model = get_user_model()  # User
-    queryset = get_user_model().objects.all()
-    fields = (
-        'first_name',
-        'last_name'
-    )
-
-    def get_object(self, queryset=None):
-        return self.request.user
 
     # def get_queryset(self):
     #     queryset = super().get_queryset()
