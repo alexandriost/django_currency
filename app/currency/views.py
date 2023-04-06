@@ -63,14 +63,16 @@ class ContactUsCreateView(CreateView):
         Body: {self.object.message}
         '''
 
-        from django.core.mail import send_mail
-        send_mail(
-            subject,
-            message,
-            recipient,
-            [recipient],
-            fail_silently=False,
+        from currency.tasks import send_mail
+        from datetime import datetime, timedelta
+        # send_mail.delay(subject, message)
+        # send_mail.apply_async(args=[subject, message])
+        send_mail.apply_async(
+            kwargs={'subject': subject, 'message': message},
+            # eta=datetime.now() + timedelta(seconds=20)
+            # countdown=20
         )
+
 
     def form_valid(self, form):
         redirect = super().form_valid(form)
