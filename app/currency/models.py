@@ -10,9 +10,12 @@ class Rate(models.Model):
         default=RateCurrencyChoices.USD
     )
     buy = models.DecimalField(max_digits=6, decimal_places=2)
-    sell = models.DecimalField(max_digits=6, decimal_places=2)
+    sale = models.DecimalField(max_digits=6, decimal_places=2)
     # source = models.CharField(max_length=25)
     source = models.ForeignKey('currency.Source', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('-created', )
 
     def __str__(self):
         return f'| Id-{self.id} | Currency: {self.get_currency_display()} | Buy: {self.buy} |'
@@ -35,6 +38,7 @@ def source_logo_path(instance, filename):
 
 class Source(models.Model):
     name = models.CharField(max_length=64)
+    code_name = models.CharField(max_length=6, unique=True)
     source_url = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=13, blank=True)
     email = models.EmailField(blank=True)
