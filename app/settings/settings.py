@@ -168,7 +168,7 @@ if DEBUG:
 HOST = 'localhost:8000'
 HTTP_SCHEMA = 'http'
 
-#CELERY
+# CELERY
 CELERY_BROKER_URL = 'amqp://localhost'
 '''
 amqp, localhost, 5672, guest, guest
@@ -177,7 +177,7 @@ amqp, localhost, 5672, guest, guest
 CELERY_BEAT_SCHEDULE = {
     'debug': {
         'task': 'currency.tasks.slow',
-        'schedule': crontab(minute='*/1')
+        'schedule': crontab(minute='*/15')
     }
 }
 

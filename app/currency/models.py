@@ -12,7 +12,7 @@ class Rate(models.Model):
     buy = models.DecimalField(max_digits=6, decimal_places=2)
     sale = models.DecimalField(max_digits=6, decimal_places=2)
     # source = models.CharField(max_length=25)
-    source = models.ForeignKey('currency.Source', on_delete=models.CASCADE)
+    source = models.ForeignKey('currency.Source', on_delete=models.CASCADE, related_name='rates')
 
     class Meta:
         ordering = ('-created', )
@@ -48,6 +48,7 @@ class Source(models.Model):
         blank=True,
         upload_to=source_logo_path
     )
+    code_name = models.CharField(max_length=64, unique=True)
 
     @property
     def logo_url(self):
