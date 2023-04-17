@@ -2,14 +2,26 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
+from django_filters.views import FilterView
 
+from currency.filters import RateFilter
 from currency.forms import RateForm, SourceForm
 from currency.models import Rate, ContactUs, Source
 
 
-class RateListView(ListView):
+class RateListView(FilterView):
     queryset = Rate.objects.all().select_related('source')
     template_name = 'rates_list.html'
+    paginate_by = 10
+    filterset_class = RateFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
+
 
 
 class RateDetailView(LoginRequiredMixin, DetailView):
