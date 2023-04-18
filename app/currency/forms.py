@@ -19,7 +19,7 @@ class SourceForm(forms.ModelForm):
         fields = (
             'name',
             'source_url',
-            'phone_number',
+            'phone',
             'email',
             'source_logo'
         )

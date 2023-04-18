@@ -12,4 +12,4 @@ class RateFilter(django_filters.FilterSet):
 class SourceFilter(django_filters.FilterSet):
     class Meta:
         model = Source
-        fields = ['name', 'code_name', 'phone_number', 'email']
+        fields = ['name', 'code_name', 'phone', 'email']

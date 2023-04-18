@@ -11,7 +11,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
-    phone_number = models.CharField(max_length=13, blank=True)
+    phone = models.CharField(max_length=13, blank=True)
     avatar = models.FileField(default=None,
                               null=True,
                               blank=True,
@@ -25,7 +25,7 @@ class User(AbstractUser):
 
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'phone_number']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'phone']
 
     @property
     def avatar_url(self):
