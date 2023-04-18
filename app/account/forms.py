@@ -16,7 +16,7 @@ class UserSignUpForm(forms.ModelForm):
         model = User
         fields = (
             'email',
-            'phone_number',
+            'phone',
             'first_name',
             'last_name',
             'password1',
@@ -37,6 +37,7 @@ class UserSignUpForm(forms.ModelForm):
         # user.password = password -> WRONG
         user.is_active = False
         user.username = uuid.uuid4()
+        user.email.lower()
         user.set_password(password)
         user.save()  # send request to db
 
