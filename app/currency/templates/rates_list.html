@@ -10,11 +10,12 @@
     <h1>Rates list</h1>
 
     <a href="{% url 'currency:rate-create' %}">Create</a><br>
-     <form method="get">
+
+    <form method="get">
         {{ filter.form.as_p }}
         <input type="submit" />
-    </form>
-    <br>
+    </form><br>
+
     <div class="row col-12">
     <table class="table table-striped">
   <thead>

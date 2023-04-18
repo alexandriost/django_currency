@@ -11,6 +11,11 @@
 
 <a href="{% url 'currency:sources-create' %}">Create source</a><p>
 
+    <form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form><br>
+
 <table>
     <tr>
         <th>Id</th>
@@ -34,5 +39,7 @@
     </tr>
     {% endfor %}
 </table>
+
+    {% include 'includes/pagination.html' %}
 
 {% endblock content %}

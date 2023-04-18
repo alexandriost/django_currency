@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from django_filters.views import FilterView
 
-from currency.filters import RateFilter
+from currency.filters import RateFilter, SourceFilter
 from currency.forms import RateForm, SourceForm
 from currency.models import Rate, ContactUs, Source
 
@@ -21,7 +21,6 @@ class RateListView(FilterView):
             f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
         )
         return context
-
 
 
 class RateDetailView(LoginRequiredMixin, DetailView):
@@ -94,7 +93,15 @@ class ContactUsCreateView(CreateView):
 class SourceListView(ListView):
     queryset = Source.objects.all()
     template_name = 'sources_list.html'
+    paginate_by = 10
+    filterset_class = SourceFilter
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
 
 class SourceDetailView(DetailView):
     queryset = Source.objects.all()
