@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import pre_save
+# post_save
 from django.dispatch import receiver
+
 
 User = get_user_model()
 
@@ -14,3 +16,4 @@ def user_fix_email(sender, instance, **kwargs):
 @receiver(pre_save, sender=User)
 def user_fix_phone(sender, instance, **kwargs):
     if instance.phone:
+        instance.phone = int(''.join(list(filter(lambda x: x.isdigit(), instance.phone))))

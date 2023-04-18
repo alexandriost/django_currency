@@ -103,6 +103,7 @@ class SourceListView(ListView):
         )
         return context
 
+
 class SourceDetailView(DetailView):
     queryset = Source.objects.all()
     template_name = 'sources_details.html'
