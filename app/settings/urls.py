@@ -31,8 +31,9 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('', IndexView.as_view(), name='index'),
 
-    path('currency/', include('currency.urls'))
-
+    path('currency/', include('currency.urls')),
+    path('api/currency/', include('currency.api.urls')),
+    path('api/', include('account.api.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
