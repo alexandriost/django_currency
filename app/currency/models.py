@@ -40,7 +40,7 @@ class Source(models.Model):
     name = models.CharField(max_length=64)
     code_name = models.CharField(max_length=6, unique=True)
     source_url = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=13, blank=True)
+    phone = models.CharField(max_length=13, blank=True)
     email = models.EmailField(blank=True)
     source_logo = models.FileField(
         default=None,

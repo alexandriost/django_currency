@@ -58,12 +58,12 @@ class SourceAdmin(ImportExportModelAdmin):
         'id',
         'name',
         'source_url',
-        'phone_number',
+        'phone',
         'email',
     )
     search_fields = (
         'name',
         'source_url',
-        'phone_number',
+        'phone',
         'email',
     )

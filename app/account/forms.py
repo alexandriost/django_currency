@@ -16,7 +16,7 @@ class UserSignUpForm(forms.ModelForm):
         model = User
         fields = (
             'email',
-            'phone_number',
+            'phone',
             'first_name',
             'last_name',
             'password1',

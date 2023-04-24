@@ -6,14 +6,14 @@ from rest_framework.response import Response
 from rest_framework_xml.renderers import XMLRenderer
 from rest_framework_yaml.renderers import YAMLRenderer
 
-# from django_filters import rest_framework as filters
-# from rest_framework import filters as rest_framework_filters
+from django_filters import rest_framework as filters
+from rest_framework import filters as rest_framework_filters
 
 from currency.api.v1.serializers import RateSerializer
 from currency.filters import RateFilter
 from currency.models import Rate
-# from currency.paginators import RatesPagination
-# from currency.throttlers import AnonCurrencyThrottle
+from currency.paginators import RatesPagination
+from currency.throttlers import AnonCurrencyThrottle
 
 
 # class RateApiView(generics.ListCreateAPIView):
