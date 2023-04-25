@@ -123,7 +123,6 @@ class ContactUsDetailView(DetailView):
     template_name = 'contactus_details.html'
 
 
-
 class SourceListView(ListView):
     queryset = Source.objects.all()
     template_name = 'sources_list.html'
@@ -136,6 +135,7 @@ class SourceListView(ListView):
             f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
         )
         return context
+
 
 class SourceDetailView(DetailView):
     queryset = Source.objects.all()

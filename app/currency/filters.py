@@ -17,7 +17,8 @@ class ContactUsFilter(django_filters.FilterSet):
     class Meta:
         model = ContactUs
         fields = {
-            'subject': ('startswith', 'endswith', 'contains'),
+            'email': ('icontains',),
+            'subject': ('icontains',)
         }
 
 

@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from currency.models import Rate, Source, ContactUs
 from currency.tasks import send_mail
-from django.conf import settings
 
 
 class RateSerializer(serializers.ModelSerializer):
@@ -41,14 +40,12 @@ class ContactUsSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        contactus = ContactUs.objects.create(**validated_data)
-        recipient = settings.DEFAULT_FROM_EMAIL
-        from django.core.mail import send_mail
-        send_mail(
-            validated_data['subject'],
-            validated_data['message'],
-            validated_data['email_from'],
-            ['recipient'],
-            fail_silently=False,
+        contact_obj = ContactUs.objects.create(
+            email_from=validated_data['email_from'],
+            subject=validated_data['subject'],
+            message=validated_data['message']
         )
-        return contactus
+
+        send_mail(validated_data['subject'], validated_data['message'])
+
+        return contact_obj
