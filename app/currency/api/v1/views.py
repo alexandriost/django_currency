@@ -9,9 +9,9 @@ from rest_framework_yaml.renderers import YAMLRenderer
 from django_filters import rest_framework as filters
 from rest_framework import filters as rest_framework_filters
 
-from currency.api.v1.serializers import RateSerializer
-from currency.filters import RateFilter
-from currency.models import Rate
+from currency.api.v1.serializers import RateSerializer, SourceSerializer, ContactUsSerializer
+from currency.filters import RateFilter, SourceFilter, ContactUsFilter
+from currency.models import Rate, Source, ContactUs
 from currency.paginators import RatesPagination
 from currency.throttlers import AnonCurrencyThrottle
 
@@ -49,4 +49,27 @@ class RateViewSet(viewsets.ModelViewSet):
 
 
 class SourceViewSet:
+    queryset = Source.objects.all()
+    serializer_class = SourceSerializer
+    renderer_classes = (JSONRenderer, XMLRenderer, YAMLRenderer)
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        rest_framework_filters.OrderingFilter,
+    )
+    filterset_class = SourceFilter
+    throttle_classes = (AnonCurrencyThrottle,)
+
+
+class ContactUsViewSet(viewsets.ModelViewSet):
+    queryset = ContactUs.objects.all()
+    serializer_class = ContactUsSerializer
+    renderer_classes = (JSONRenderer, XMLRenderer, YAMLRenderer)
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        rest_framework_filters.OrderingFilter,
+        rest_framework_filters.SearchFilter,
+    )
+    search_fields = ['name', 'subject', 'message']
+    filterset_class = ContactUsFilter
+    ordering_fields = ('id', 'created', 'email_from',)
     throttle_classes = (AnonCurrencyThrottle,)

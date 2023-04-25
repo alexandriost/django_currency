@@ -4,8 +4,8 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from django_filters.views import FilterView
 
-from currency.filters import RateFilter, SourceFilter
-from currency.forms import RateForm, SourceForm
+from currency.filters import RateFilter, ContactUsFilter, SourceFilter
+from currency.forms import RateForm, ContactUsForm, SourceForm
 from currency.models import Rate, ContactUs, Source
 
 
@@ -53,9 +53,24 @@ class RateDeleteView(UserPassesTestMixin, DeleteView):
         return self.request.user.is_superuser
 
 
+class ContactUsListView(FilterView):
+    template_name = 'contactus_list.html'
+    queryset = ContactUs.objects.all()
+    paginate_by = 5
+    model = ContactUs
+    filterset_class = ContactUsFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
+
+
 class ContactUsCreateView(CreateView):
     template_name = 'contactus_create.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('currency:contactus-list')
     model = ContactUs
     fields = (
         'name',
@@ -88,6 +103,25 @@ class ContactUsCreateView(CreateView):
         redirect = super().form_valid(form)
         self._send_mail()
         return redirect
+
+
+class ContactUsUpdateView(UpdateView):
+    form_class = ContactUsForm
+    template_name = 'contactus_update.html'
+    success_url = reverse_lazy('currency:contactus-list')
+    queryset = ContactUs.objects.all()
+
+
+class ContactUsDeleteView(DeleteView):
+    queryset = ContactUs.objects.all()
+    template_name = 'contactus_delete.html'
+    success_url = reverse_lazy('currency:contactus-list')
+
+
+class ContactUsDetailView(DetailView):
+    queryset = ContactUs.objects.all()
+    template_name = 'contactus_details.html'
+
 
 
 class SourceListView(ListView):

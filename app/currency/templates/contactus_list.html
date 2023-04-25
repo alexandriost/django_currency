@@ -11,6 +11,11 @@
 
     <a href="{% url 'currency:contactus-create' %}">Create contact</a><br><p>
 
+    <form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form><br>
+
 <table>
     <tr>
         <th>Id</th>
@@ -30,5 +35,9 @@
     </tr>
     {% endfor %}
 </table>
+
+    <br>
+
+{% include 'includes/pagination.html' %}
 
 {% endblock content %}
