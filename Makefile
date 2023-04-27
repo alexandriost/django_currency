@@ -24,3 +24,4 @@ worker:
 
 beat:
 	cd app && celery -A settings beat -l info
+
