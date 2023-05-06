@@ -70,7 +70,7 @@ class ContactUsListView(FilterView):
 
 class ContactUsCreateView(CreateView):
     template_name = 'contactus_create.html'
-    success_url = reverse_lazy('currency:contactus-list')
+    success_url = reverse_lazy('index')
     model = ContactUs
     fields = (
         'name',

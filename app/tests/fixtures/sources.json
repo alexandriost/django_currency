@@ -1,0 +1,26 @@
+[
+  {
+    "model": "currency.source",
+    "pk": 1,
+    "fields": {
+      "name": "1",
+      "source_url": "",
+      "phone": "",
+      "email": "",
+      "source_logo": "",
+      "code_name": "1"
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 2,
+    "fields": {
+      "name": "saas",
+      "source_url": "saas",
+      "phone": "asas",
+      "email": "oleksandr.ostrolutsky@gmail.com",
+      "source_logo": "",
+      "code_name": ""
+    }
+  }
+]

@@ -1,0 +1,123 @@
+[
+  {
+    "model": "currency.rate",
+    "pk": 1,
+    "fields": {
+      "created": "2023-04-25T15:04:38.220Z",
+      "currency": 2,
+      "buy": "33.00",
+      "sale": "32.00",
+      "source": 1
+    }
+  },
+  {
+    "model": "currency.rate",
+    "pk": 2,
+    "fields": {
+      "created": "2023-04-25T15:04:38.227Z",
+      "currency": 2,
+      "buy": "34.00",
+      "sale": "40.00",
+      "source": 1
+    }
+  },
+  {
+    "model": "currency.rate",
+    "pk": 3,
+    "fields": {
+      "created": "2023-04-25T15:04:38.233Z",
+      "currency": 3,
+      "buy": "34.00",
+      "sale": "33.00",
+      "source": 1
+    }
+  },
+  {
+    "model": "currency.rate",
+    "pk": 4,
+    "fields": {
+      "created": "2023-04-25T15:04:38.239Z",
+      "currency": 2,
+      "buy": "31.00",
+      "sale": "39.00",
+      "source": 1
+    }
+  },
+  {
+    "model": "currency.rate",
+    "pk": 5,
+    "fields": {
+      "created": "2023-04-25T15:04:38.245Z",
+      "currency": 1,
+      "buy": "35.00",
+      "sale": "35.00",
+      "source": 1
+    }
+  },
+  {
+    "model": "currency.rate",
+    "pk": 6,
+    "fields": {
+      "created": "2023-04-25T15:04:38.252Z",
+      "currency": 3,
+      "buy": "34.00",
+      "sale": "38.00",
+      "source": 1
+    }
+  },
+  {
+    "model": "currency.rate",
+    "pk": 7,
+    "fields": {
+      "created": "2023-04-25T15:04:38.258Z",
+      "currency": 3,
+      "buy": "39.00",
+      "sale": "30.00",
+      "source": 1
+    }
+  },
+  {
+    "model": "currency.rate",
+    "pk": 8,
+    "fields": {
+      "created": "2023-04-25T15:04:38.264Z",
+      "currency": 2,
+      "buy": "36.00",
+      "sale": "31.00",
+      "source": 1
+    }
+  },
+  {
+    "model": "currency.rate",
+    "pk": 9,
+    "fields": {
+      "created": "2023-04-25T15:04:38.270Z",
+      "currency": 1,
+      "buy": "35.00",
+      "sale": "33.00",
+      "source": 1
+    }
+  },
+  {
+    "model": "currency.rate",
+    "pk": 10,
+    "fields": {
+      "created": "2023-04-25T15:04:38.277Z",
+      "currency": 1,
+      "buy": "32.00",
+      "sale": "40.00",
+      "source": 1
+    }
+  },
+  {
+    "model": "currency.rate",
+    "pk": 11,
+    "fields": {
+      "created": "2023-04-25T15:04:38.283Z",
+      "currency": 3,
+      "buy": "34.00",
+      "sale": "39.00",
+      "source": 1
+    }
+  }
+]

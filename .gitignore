@@ -6,3 +6,5 @@ venv
 .DS_Store
 github
 github.pub
+.coverage
+.pytest_cache

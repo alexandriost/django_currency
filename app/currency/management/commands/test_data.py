@@ -7,7 +7,7 @@ from currency.choices import RateCurrencyChoices
 
 
 class Command(BaseCommand):
-    help = "Generate random test rates"
+    help = "Generate random test rates" # noqa: A003, E261
 
     def handle(self, *args, **options):
         source, _ = Source.objects.get_or_create(code_name='1', defaults={'name': 1})

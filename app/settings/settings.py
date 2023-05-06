@@ -199,7 +199,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',  # 401
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',  # 403
+        'rest_framework.permissions.AllowAny',  # 403
     ),
     'DEFAULT_THROTTLE_RATES': {
         'currency': '2/min',
