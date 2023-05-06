@@ -1,4 +1,4 @@
-from .settings import *
+from .settings import * # noqa: F401,F403,E261
 
 DEBUG = False
 CELERY_TASK_ALWAYS_EAGER = True
