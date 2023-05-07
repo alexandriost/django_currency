@@ -201,9 +201,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',  # 403
     ),
-    'DEFAULT_THROTTLE_RATES': {
-        'currency': '2/min',
-    },
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'currency': '2/min',
+    # },
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
@@ -233,11 +233,21 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": "127.0.0.1:11211",
+    }
+}
+
+
+# AWS_S3_REGION_NAME = 'fra1'
+# AWS_S3_ENDPOINT_URL = ''
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# AWS_ACCESS_KEY = ''
+# AWS_ACCESS_KEY_ID = ''
 # AWS_SECRET_ACCESS_KEY = ''
-# AWS_STORAGE_BUCKET_NAME = ''
-# AWS_QUERYSTRING_AUTH = False
-# AWS_S3_REGION_NAME = ''
-# MEDIA_URL = ''
-# AWS_DEFULT_ACL = ''
+# AWS_STORAGE_BUCKET_NAME = 'static'
+# MEDIA_URL = 'media/'
+# AWS_DEFULT_ACL = 'public-read'
+# STATIC_URL = 'static/'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

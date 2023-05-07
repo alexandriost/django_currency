@@ -18,6 +18,7 @@ ipython==8.10.0
 flake8==6.0.0
 flake8-builtins==2.1.0
 flake8-print==5.0.0
+pymemcache==4.0.0
 pytest==7.3.1
 pytest-cov==4.0.0
 pytest-django==4.5.2
