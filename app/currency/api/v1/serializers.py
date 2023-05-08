@@ -12,7 +12,8 @@ class RateSerializer(serializers.ModelSerializer):
             'buy',
             'sale',
             'created',
-            'source'
+            'source',
+            'currency',
         )
 
 

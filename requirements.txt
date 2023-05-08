@@ -1,3 +1,4 @@
+#main
 boto3==1.26.100
 celery==5.2.7
 crispy-bootstrap4==2022.1
@@ -15,12 +16,22 @@ djangorestframework-xml==2.0.0
 djangorestframework-yaml==2.0.0
 drf-yasg==1.21.5
 ipython==8.10.0
+requests==2.28.2
+
+#services
+gunicorn==20.1.0
+psycopg2-binary==2.9.6
+pymemcache==4.0.0
+
+
+#flake8
 flake8==6.0.0
 flake8-builtins==2.1.0
 flake8-print==5.0.0
+
+#pytest
 pytest==7.3.1
 pytest-cov==4.0.0
 pytest-django==4.5.2
 pytest-mock==3.10.0
-requests==2.28.2
 
