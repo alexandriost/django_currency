@@ -2,7 +2,7 @@ def foo(a: int, b=None):
     if b is None:
         b = []
     b.append(a)
-    print(b)
+    print(b) # noqa: T201, E261
 
 
 foo(1)

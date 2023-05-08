@@ -1,3 +1,4 @@
+#main
 boto3==1.26.100
 celery==5.2.7
 crispy-bootstrap4==2022.1

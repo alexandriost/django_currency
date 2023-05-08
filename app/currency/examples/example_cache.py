@@ -33,7 +33,7 @@ __hash__
 def cache_func(function):
     def wrapper(*args, **kwargs):
         key = f'{function.__name__}::{args}::{kwargs}'
-        print(key)
+        print(key) # noqa: T201, E261
 
         if key in CACHE:
             return CACHE[key]
@@ -60,10 +60,10 @@ def foo():
 
 
 start = time()
-print(add(12, 3))
-print(add(12, 3))
-print(foo())
-print(foo())
+print(add(12, 3)) # noqa: T201, E261
+print(add(12, 3)) # noqa: T201, E261
+print(foo()) # noqa: T201, E261
+print(foo()) # noqa: T201, E261
 
-print(CACHE)
-print(f'Time: {time() - start}')
+print(CACHE) # noqa: T201, E261
+print(f'Time: {time() - start}') # noqa: T201, E261

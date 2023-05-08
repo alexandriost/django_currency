@@ -1,8 +1,8 @@
 from time import sleep, time
 import threading
-from multiprocessing import Process, Pool, Queue
+from multiprocessing import Process, Pool, Queue # noqa: F401, E261
 
-import requests
+import requests # noqa: F401, E261
 
 # def slow(n):
 #     sleep(n)
@@ -166,12 +166,12 @@ worker_type = sys.argv[1]
 def slow(n):
     sleep(n)
 
-if worker_type == 'fork':
+if worker_type == 'fork': # noqa: E305, E261
     concurrency_class = Process
 elif worker_type == 'thread':
     concurrency_class = threading.Thread
 
-print(concurrency_class)
+print(concurrency_class) # noqa: T201, E261
 
 start = time()
 
@@ -188,4 +188,4 @@ if __name__ == '__main__':
     th2.join()
     th3.join()
 
-    print(f'Execution: {time() - start}')
+    print(f'Execution: {time() - start}') # noqa: T201, E261

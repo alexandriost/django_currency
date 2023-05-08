@@ -3,6 +3,7 @@ __pycache__
 venv
 *.db
 *.sqlite3
+*.sql
 .DS_Store
 github
 github.pub
