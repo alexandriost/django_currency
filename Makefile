@@ -20,7 +20,7 @@ testdata:
 	$(manage_py) test_data
 
 worker:
-	cd app && celery -A settings worker -l info --autoscale=0,10
+	cd app && celery -A settings worker -l info -c 4 --pool threads
 
 beat:
 	cd app && celery -A settings beat -l info
