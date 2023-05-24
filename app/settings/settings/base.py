@@ -136,7 +136,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'app/static']
+STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR.parent / 'static_content' / 'static'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
