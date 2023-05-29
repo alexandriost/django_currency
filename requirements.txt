@@ -16,6 +16,7 @@ djangorestframework-simplejwt==5.2.2
 djangorestframework-xml==2.0.0
 djangorestframework-yaml==2.0.0
 drf-yasg==1.21.5
+flower==1.2.0
 ipython==8.10.0
 requests==2.28.2
 

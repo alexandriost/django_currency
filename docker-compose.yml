@@ -28,6 +28,15 @@ services:
     container_name: celerybeat
     <<: *x-defaults
 
+  flower:
+    command: celery -A settings flower
+    container_name: flower
+    depends_on:
+      - celery
+    ports:
+      - "5555:5555"
+    <<: *x-defaults
+
   memcached:
     image: memcached:1.6.9
     container_name: memcached
@@ -50,6 +59,15 @@ services:
 #      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    env_file: .env
+    ports:
+      - "15432:80"
+    depends_on:
+      - postgres
 
   nginx:
     image: nginx
