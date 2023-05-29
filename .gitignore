@@ -10,3 +10,4 @@ github.pub
 .coverage
 .pytest_cache
 local.py
+.env

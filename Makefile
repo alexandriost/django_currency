@@ -1,5 +1,5 @@
 
-manage_py := python app/manage.py
+manage_py := docker compose exec -it backend python app/manage.py
 
 run:
 	$(manage_py) runserver
@@ -10,14 +10,16 @@ migrate:
 makemigrations:
 	$(manage_py) makemigrations
 
-shell:
-	$(manage_py) shell_plus --print-sql
-
 createsuperuser:
 	$(manage_py) createsuperuser
 
-testdata:
-	$(manage_py) test_data
+shell:
+	$(manage_py) shell_plus --print-sql
+
+collectstatic:
+	$(manage_py) collectstatic --no-input && \
+	docker cp backend:/tmp/static /tmp/static && \
+	docker cp /tmp/static nginx:/etc/nginx/static
 
 worker:
 	cd app && celery -A settings worker -l info -c 4 --pool threads
@@ -26,7 +28,7 @@ beat:
 	cd app && celery -A settings beat -l info
 
 pytest:
-	pytest ./app/tests --cov=app --cov-report html && coverage report --fail-under=70.7754
+	docker compose exec -it backend pytest ./app/tests --cov=app --cov-report html && coverage report --fail-under=79.7754
 
 gunicorn:
-	cd app && gunicorn --workers 4 settings.wsgi --timeout 30 --max-requests 10000 --log-level info --bind 0.0.0.0:8000
+	cd app && gunicorn --workers 4 settings.wsgi --max-requests 10000 --log-level info --bind 0.0.0.0:8000
