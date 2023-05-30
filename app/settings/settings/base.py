@@ -9,26 +9,33 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from datetime import timedelta
 from pathlib import Path
 
 from celery.schedules import crontab
 from django.urls import reverse_lazy
+from environ import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-tg5@&!3s3qg64ghe@_e1)pkiz+opzp3w*p5-@njg6e$n8ih(i6'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),
+)
+environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env'))
 
-ALLOWED_HOSTS = ['*']
+DEBUG = env('DEBUG')
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
 
 # Application definition
 
@@ -98,10 +105,15 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env.str('POSTGRES_DB', 'currency-db'),
+        'USER': env.str('POSTGRES_USER', ''),
+        'PASSWORD': env.str('POSTGRES_PASSWORD', ''),
+        'HOST': env.str('POSTGRES_HOST', 'localhost'),
+        'PORT': env.str('POSTGRES_PORT', '5432'),
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -121,6 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -132,12 +145,14 @@ USE_I18N = True
 
 USE_TZ = True
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR.parent / 'static_content' / 'static'
+# STATIC_ROOT = BASE_DIR.parent / 'static_content' /
+STATIC_ROOT = '/tmp/static'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -167,33 +182,31 @@ AUTH_USER_MODEL = 'account.User'
 
 if DEBUG:
     import socket  # only if you haven't already imported this
-
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+
 
 HOST = 'localhost:8000'
 HTTP_SCHEMA = 'http'
 
 # CELERY
-CELERY_BROKER_URL = 'amqp://localhost'
+# CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_BROKER_URL = 'amqp://{0}:{1}@{2}:{3}//'.format(
+    env.str('RABBITMQ_DEFAULT_USER', 'guest'),
+    env.str('RABBITMQ_DEFAULT_PASS', 'guest'),
+    env.str('RABBITMQ_DEFAULT_HOST', '127.0.0.1'),
+    env.str('RABBITMQ_DEFAULT_PORT', '5672')
+)
 '''
 amqp, localhost, 5672, guest, guest
 '''
-
 CELERY_BEAT_SCHEDULE = {
-    # 'debug': {
-    #     'task': 'currency.tasks.slow',
-    #     'schedule': crontab(minute='*/15')
-    # }
-    'parse_privatbank': {
+    'debug': {
         'task': 'currency.tasks.parse_privatbank',
-        'schedule': crontab(minute='*/15')
-    },
-    'parse_monobank': {
-        'task': 'currency.tasks.parse_monobank',
-        'schedule': crontab(minute='*/15')
+        'schedule': crontab(minute='*/1')
     }
 }
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -237,7 +250,7 @@ SIMPLE_JWT = {
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
-        "LOCATION": "127.0.0.1:11211",
+        "LOCATION": f"{env.str('CACHE_DEFAULT_HOST', '127.0.0.1')}:{env.str('CACHE_DEFAULT_PORT', '127.0.0.1')}",
     }
 }
 
@@ -249,6 +262,6 @@ CACHES = {
 # AWS_SECRET_ACCESS_KEY = ''
 # AWS_STORAGE_BUCKET_NAME = 'static'
 # MEDIA_URL = 'media/'
-# AWS_DEFULT_ACL = 'public-read'
+# AWS_DEFAULT_ACL = 'public-read'
 # STATIC_URL = 'static/'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
